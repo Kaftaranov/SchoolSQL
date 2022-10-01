@@ -1,8 +1,10 @@
 package ru.hogwarts.school.Service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.Models.Faculty;
 import ru.hogwarts.school.Models.Student;
 import ru.hogwarts.school.Repository.StudentsRepository;
+import ru.hogwarts.school.Repository.FacultyRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -10,9 +12,11 @@ import java.util.stream.Collectors;
 @Service
 public class StudentService {
     private final StudentsRepository studentsRepository;
+    private final FacultyRepository facultyRepository;
 
-    public StudentService(StudentsRepository studentsRepository) {
+    public StudentService(StudentsRepository studentsRepository, FacultyRepository facultyRepository) {
         this.studentsRepository = studentsRepository;
+        this.facultyRepository = facultyRepository;
     }
 
     public Student add(Student student) {
@@ -44,6 +48,14 @@ public class StudentService {
         return studentsRepository.findAllByNameContainingIgnoreCase(letter);
     }
 
+    public List<Student> getStudentsOfFaculty(long faculty_id) {
+        return studentsRepository.findStudentByFaculty_IdOrderByName(faculty_id);
+    }
+
+    public Faculty getfacultyOfStudent(String studentname) {
+      return
+      facultyRepository.findById(studentsRepository.findStudentByName(studentname).getFacultyId()) ;
+    }
 }
 
 

@@ -23,16 +23,17 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
-    @GetMapping("/color")
-    public ResponseEntity<List<Faculty>> filterByColor(@RequestParam String color){
-        List<Faculty> colorCollection = facultyService.filterByColor(color);
-        if (colorCollection.isEmpty()){
+    @GetMapping("/find")
+    public ResponseEntity<Faculty> filterByColorOrName(@RequestParam String descriptor){
+        Faculty faculty = facultyService.filterByColorOrName(descriptor);
+        if (faculty == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(colorCollection);
+        return ResponseEntity.ok(faculty);
     }
     @GetMapping("/all")
     public ResponseEntity<List<Faculty>> getAllFaculties(){
+
         return ResponseEntity.ok(facultyService.getAll());
     }
 
