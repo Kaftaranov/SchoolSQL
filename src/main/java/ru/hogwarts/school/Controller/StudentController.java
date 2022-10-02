@@ -2,10 +2,9 @@ package ru.hogwarts.school.Controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.Models.Faculty;
 import ru.hogwarts.school.Models.Student;
 import ru.hogwarts.school.Service.StudentService;
-
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -25,7 +24,7 @@ public class StudentController {
         }
         return ResponseEntity.ok(student);
     }
-    @GetMapping("/age")
+    @GetMapping("/ofage")
     public ResponseEntity<List<Student>> filterByAge(@RequestParam int age){
         List<Student> ageCollection = studentService.filterByAge(age);
         if (ageCollection.isEmpty()){
@@ -52,6 +51,11 @@ public class StudentController {
     @GetMapping("/all")
     public ResponseEntity<List<Student>> getAllStudents(){
         return ResponseEntity.ok(studentService.getAll());
+    }
+
+    @GetMapping("/{id}/faculty")
+    public Faculty getStudentsFaculty(long id){
+        return studentService.getfacultyOfStudent(id);
     }
 
     @PostMapping("/add")
