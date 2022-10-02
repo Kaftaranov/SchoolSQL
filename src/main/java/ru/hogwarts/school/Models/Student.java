@@ -14,12 +14,7 @@ public class Student {
     @JoinColumn(name = "faculty")
     private Faculty faculty;
 
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
-
-    public Student() {super();
-           }
+    public Student() {super();}
 
     public long getId() {
         return id;
