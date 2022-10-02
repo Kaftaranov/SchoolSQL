@@ -3,7 +3,9 @@ package ru.hogwarts.school.Controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.Models.Faculty;
+import ru.hogwarts.school.Models.Student;
 import ru.hogwarts.school.Service.FacultyService;
+import ru.hogwarts.school.Service.StudentService;
 
 import java.util.List;
 
@@ -11,8 +13,10 @@ import java.util.List;
 @RequestMapping(path = "/faculty")
 public class FacultyController {
     private final FacultyService facultyService;
-    public FacultyController(FacultyService facultyService){
+    private final StudentService studentService;
+    public FacultyController(FacultyService facultyService, StudentService studentService){
         this.facultyService = facultyService;
+        this.studentService = studentService;
     }
     @GetMapping("{id}")
     public ResponseEntity<Faculty> getFaculty (@PathVariable long id){
@@ -24,8 +28,8 @@ public class FacultyController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<Faculty> filterByColorOrName(@RequestParam String descriptor){
-        Faculty faculty = facultyService.filterByColorOrName(descriptor);
+    public ResponseEntity<List<Faculty>> filterByColorOrName(@RequestParam String descriptor){
+        List<Faculty> faculty = facultyService.filterByColorOrName(descriptor);
         if (faculty == null){
             return ResponseEntity.notFound().build();
         }
@@ -33,8 +37,11 @@ public class FacultyController {
     }
     @GetMapping("/all")
     public ResponseEntity<List<Faculty>> getAllFaculties(){
-
         return ResponseEntity.ok(facultyService.getAll());
+    }
+    @GetMapping("/{id}/students")
+    public ResponseEntity<List<Student>> getStudentsOfFaculty(long faculty){
+        return ResponseEntity.ok(studentService.getStudentsOfFaculty(faculty));
     }
 
     @PostMapping("/add")

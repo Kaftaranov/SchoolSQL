@@ -52,13 +52,10 @@ public class StudentController {
     public ResponseEntity<List<Student>> getAllStudents(){
         return ResponseEntity.ok(studentService.getAll());
     }
-    @GetMapping("/facultylist")
-    public ResponseEntity<List<Student>> getStudentsOfFaculty(long faculty){
-        return ResponseEntity.ok(studentService.getStudentsOfFaculty(faculty));
-    }
-    @GetMapping("/facultyofstudent")
-    public Faculty getStudentsFaculty(String studentname){
-        return studentService.getfacultyOfStudent(studentname);
+
+    @GetMapping("/{id}/faculty")
+    public Faculty getStudentsFaculty(long id){
+        return studentService.getfacultyOfStudent(id);
     }
 
     @PostMapping("/add")

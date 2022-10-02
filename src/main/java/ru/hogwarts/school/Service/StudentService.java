@@ -52,9 +52,9 @@ public class StudentService {
         return studentsRepository.findStudentByFaculty_IdOrderByName(faculty_id);
     }
 
-    public Faculty getfacultyOfStudent(String studentname) {
+    public Faculty getfacultyOfStudent(long id) {
       return
-      facultyRepository.findById(studentsRepository.findStudentByName(studentname).getFacultyId()) ;
+      facultyRepository.findById(studentsRepository.findById(id).getFacultyId()) ;
     }
 }
 

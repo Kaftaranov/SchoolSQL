@@ -2,7 +2,6 @@ package ru.hogwarts.school.Service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.Models.Faculty;
-import ru.hogwarts.school.Models.Student;
 import ru.hogwarts.school.Repository.FacultyRepository;
 
 import java.util.*;
@@ -21,15 +20,17 @@ public class FacultyService {
     public Faculty findById(long id){
         return facultyRepository.findById(id);
     }
-    public Faculty filterByColorOrName(String descriptor) {
-        if (facultyRepository.findFacultiesByColorIgnoreCase(descriptor) != null){
+    public List<Faculty> filterByColorOrName(String descriptor) {
+       /* if (facultyRepository.findFacultiesByColorIgnoreCase(descriptor) != null){
             return facultyRepository.findFacultiesByColorIgnoreCase(descriptor);
         }
         if (facultyRepository.findFacultiesByNameIgnoreCase(descriptor) != null){
             return facultyRepository.findFacultiesByNameIgnoreCase(descriptor);
         }
-        return null;
+        return null;*/
+        return facultyRepository.findFacultyByNameIgnoreCaseOrColorIgnoreCase(descriptor,descriptor);
     }
+
     public Faculty update(Faculty faculty){
         return facultyRepository.save(faculty);
     }
